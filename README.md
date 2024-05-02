@@ -6,7 +6,7 @@ This project involves various image processing operations implemented using Pyth
 
 ## Authors
 - [Muhammad Ilyas](https://github.com/Muhammad-Ilyas-Ibrahim)
-- [Moavia Hassan (20% Contricution)](https://github.com/Moavia-Hassan)
+- [Moavia Hassan (20% Contribution)](https://github.com/Moavia-Hassan)
 
 ## Prerequisites
 - Python 3.x
@@ -20,7 +20,7 @@ This project involves various image processing operations implemented using Pyth
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Muhammad-Ilyas-Ibrahim/repository.git
+   git clone https://github.com/Muhammad-Ilyas-Ibrahim/GUI-Based-CV-Project.git
    ```
 
 2. Install the required dependencies:
