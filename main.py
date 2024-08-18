@@ -16,6 +16,7 @@ class App:
         self.root.title('Vision Master | Authors: Muhammad Ilyas')
         self.root.geometry('1200x700+80+1')
         self.root.resizable(False, False)
+        self.root.iconbitmap('assets/icon.ico')
         self.heading = Label(text="Operations", font=("Helvetica", 20, 'bold'), fg="black")
         self.heading.place(x=95, y=10)
         # =========================   Images   ==========================
