@@ -1,4 +1,4 @@
-# <center> Computer Vision Project <center>
+# <center> Vision Master <center>
 
 
 ## Description
@@ -6,7 +6,9 @@ This project involves various image processing operations implemented using Pyth
 
 ## Authors
 - [Muhammad Ilyas](https://github.com/Muhammad-Ilyas-Ibrahim)
-- [Moavia Hassan (20% Contribution)](https://github.com/Moavia-Hassan)
+
+## Contributors
+- [Moavia Hassan](https://github.com/Moavia-Hassan)
 
 ## Prerequisites
 - Python 3.x
@@ -16,14 +18,18 @@ This project involves various image processing operations implemented using Pyth
 - PIL
 - matplotlib
 - resizeimage
+- opencv-contrib-python
 
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Muhammad-Ilyas-Ibrahim/GUI-Based-CV-Project.git
+   git clone https://github.com/Muhammad-Ilyas-Ibrahim/Vision-Master.git
    ```
-
-2. Install the required dependencies:
+2. Change working directory:
+   ```bash
+   cd Vision-Master
+   ```
+3. Install the required dependencies:
    ```bash
    pip install -r requirements.txt
    ```
