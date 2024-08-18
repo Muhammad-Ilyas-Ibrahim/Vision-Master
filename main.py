@@ -13,7 +13,7 @@ class App:
         self.root = root
         self.output_dir = ''  
         self.input_image_path = ''
-        self.root.title('Vision Master | Authors: Muhammad Ilyas')
+        self.root.title('Vision Master')
         self.root.geometry('1200x700+80+1')
         self.root.resizable(False, False)
         self.root.iconbitmap('assets/icon.ico')
@@ -674,3 +674,4 @@ if __name__ == '__main__':
     root = Tk()
     obj = App(root)
     root.mainloop()
+    
