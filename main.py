@@ -1,17 +1,19 @@
 from tkinter import *
 import cv2
-from tkinter import filedialog, ttk
+from tkinter import filedialog
 import numpy as np
 from PIL import Image, ImageTk
 from resizeimage import resizeimage
 from tkinter import messagebox
 import matplotlib.pyplot as plt
+import os
 
 class App:
     def __init__(self, root):
-        self.root = root    
-        self.open_img = ''
-        self.root.title('CV Project | Author: Muhammad Ilyas | 2nd Author: Moavia Hassan')
+        self.root = root
+        self.output_dir = ''  
+        self.input_image_path = ''
+        self.root.title('CV Project | Authors: Muhammad Ilyas, Moavia Hassan')
         self.root.geometry('1200x700+80+1')
         self.root.resizable(False, False)
         self.heading = Label(text="Operations", font=("Helvetica", 20, 'bold'), fg="black")
@@ -313,12 +315,16 @@ class App:
 
         # ==========================================================
     def load_image(self):
-        self.open_img = filedialog.askopenfilename(title="Open Image", filetypes=(
+        self.input_image_path = filedialog.askopenfilename(title="Open Image", filetypes=(
             ("JPG Files", "*.jpg"), ("PNG Files", "*.png"), ("All Files", "*.*")))
-        if self.open_img:
-            self.imagecv1 = cv2.imread(self.open_img)
+        self.input_image_path = self.input_image_path.replace("/", "\\")
+        
+        self.output_dir = os.path.dirname(self.input_image_path)
+                
+        if self.input_image_path:
+            self.imagecv1 = cv2.imread(self.input_image_path)
             height1, width1 = self.imagecv1.shape[:2]
-            self.get_image1 = Image.open(self.open_img)
+            self.get_image1 = Image.open(self.input_image_path)
             
             if width1 > 300 or height1 > 400:
                 # set the scaling factors
@@ -342,7 +348,7 @@ class App:
             self.upload_img1.config(image=self.final_loaded_image1, bg='#f0f0f0')
             self.input_image_path_text.config(state=NORMAL)
             self.input_image_path_text.delete('1.0', END)
-            self.input_image_path_text.insert('1.0', self.open_img)
+            self.input_image_path_text.insert('1.0', self.input_image_path)
             self.input_image_path_text.config(state=DISABLED)
         else:
             pass
@@ -372,10 +378,10 @@ class App:
         self.upload_img2.config(image=self.final_loaded_image2, bg='#f0f0f0')
         
     def add_noise(self):
-        if self.open_img == '':
+        if self.input_image_path == '':
             messagebox.showwarning('Warning!', "No Image is selected!")
             return
-        image = cv2.imread(self.open_img)
+        image = cv2.imread(self.input_image_path)
         
         # Convert the image to floating point format
         image1 = image.astype(np.float32)
@@ -386,37 +392,37 @@ class App:
 
         # Convert the image back to unsigned 8-bit integer format
         noisy_image = np.clip(noisy_image, 0, 255).astype(np.uint8)
-
-        cv2.imwrite("imgs/noisy_image.jpg", noisy_image)
-        self.show_results("imgs/noisy_image.jpg")
+        
+        cv2.imwrite(os.path.join(f"{self.output_dir}", "noisy_image.jpg"), noisy_image)
+        self.show_results(os.path.join(f"{self.output_dir}", "noisy_image.jpg"))
 
     def remove_noise(self):
-        if self.open_img == '':
+        if self.input_image_path == '':
             messagebox.showwarning('Warning!', "No Image is selected!")
             return
-        img = cv2.imread(self.open_img)
+        img = cv2.imread(self.input_image_path)
 
         # Apply the denoising function
         denoised_img = cv2.fastNlMeansDenoising(img, None, 12, 7, 21)
-        cv2.imwrite('imgs/denoised.jpg', denoised_img)
-        self.show_results('imgs/denoised.jpg')
+        cv2.imwrite(os.path.join(f"{self.output_dir}", 'denoised.jpg'), denoised_img)
+        self.show_results(os.path.join(f"{self.output_dir}", 'denoised.jpg'))
         
     def add_blur(self):
-        if self.open_img == '':
+        if self.input_image_path == '':
             messagebox.showwarning('Warning!', "No Image is selected!")
             return
-        image = cv2.imread(self.open_img)
+        image = cv2.imread(self.input_image_path)
         # apply a Gaussian blur to the image with a kernel size of (9, 9)
         blurred = cv2.GaussianBlur(image, (3, 3), 0)
 
-        cv2.imwrite('imgs/blurred.jpg', blurred)
-        self.show_results('imgs/blurred.jpg')
+        cv2.imwrite(os.path.join(f"{self.output_dir}", 'blurred.jpg'), blurred)
+        self.show_results(os.path.join(f"{self.output_dir}", 'blurred.jpg'))
         
     def remove_blur(self):
-        if self.open_img == '':
+        if self.input_image_path == '':
             messagebox.showwarning('Warning!', "No Image is selected!")
             return
-        image= cv2.imread(self.open_img)
+        image= cv2.imread(self.input_image_path)
 
         # Convert to grayscale for fast processing and good results
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -427,14 +433,14 @@ class App:
         # Apply unsharp mask filter
         unsharp = cv2.addWeighted(gray, 1.5, blur, -0.5, 0)
 
-        cv2.imwrite('imgs/Unblurred_image.jpg', unsharp)
-        self.show_results('imgs/Unblurred_image.jpg')
+        cv2.imwrite(os.path.join(f"{self.output_dir}", 'Unblurred_image.jpg'), unsharp)
+        self.show_results(os.path.join(f"{self.output_dir}", 'Unblurred_image.jpg'))
 
     def apply_SIFT(self):
-        if self.open_img == '':
+        if self.input_image_path == '':
             messagebox.showwarning('Warning!', "No Image is selected!")
             return
-        image = cv2.imread(self.open_img)
+        image = cv2.imread(self.input_image_path)
 
         # Create SIFT object
         sift = cv2.xfeatures2d.SIFT_create()
@@ -444,13 +450,13 @@ class App:
 
         # Draw SIFT features on image
         img_with_keypoints = cv2.drawKeypoints(image, keypoints, None)
-        cv2.imwrite('imgs/sift.jpg', img_with_keypoints)
-        self.show_results('imgs/sift.jpg')
+        cv2.imwrite(os.path.join(f"{self.output_dir}", 'sift.jpg'), img_with_keypoints)
+        self.show_results(os.path.join(f"{self.output_dir}", 'sift.jpg'))
     def apply_Harris(self):
-        if self.open_img == '':
+        if self.input_image_path == '':
             messagebox.showwarning('Warning!', "No Image is selected!")
             return
-        image = cv2.imread(self.open_img, 0)
+        image = cv2.imread(self.input_image_path, 0)
 
         # Define parameters for Harris Edge Detector
         block_size = 2
@@ -466,26 +472,26 @@ class App:
         # Threshold the result and set pixels above the threshold to white
         thresh = 0.01 * dst.max()
         image[dst > thresh] = 255
-        cv2.imwrite('imgs/harris.jpg', image)
-        self.show_results('imgs/harris.jpg')
+        cv2.imwrite(os.path.join(f"{self.output_dir}", 'harris.jpg'), image)
+        self.show_results(os.path.join(f"{self.output_dir}", 'harris.jpg'))
     def Canny_Edge_Detection(self):
-        if self.open_img == '':
+        if self.input_image_path == '':
             messagebox.showwarning('Warning!', "No Image is selected!")
             return
-        img = cv2.imread(self.open_img, cv2.IMREAD_GRAYSCALE)
+        img = cv2.imread(self.input_image_path, cv2.IMREAD_GRAYSCALE)
 
         # Canny edge detector
         canny = cv2.Canny(img, 50, 100)
 
-        cv2.imwrite('imgs/Canny.jpg',canny)
-        self.show_results('imgs/Canny.jpg')        
+        cv2.imwrite(os.path.join(f"{self.output_dir}", 'Canny.jpg'), canny)
+        self.show_results(os.path.join(f"{self.output_dir}", 'Canny.jpg'))      
 
 
     def apply_hog(self):
-        if self.open_img == '':
+        if self.input_image_path == '':
             messagebox.showwarning('Warning!', "No Image is selected!")
             return
-        image = cv2.imread(self.open_img, cv2.COLOR_BGR2GRAY)
+        image = cv2.imread(self.input_image_path, cv2.COLOR_BGR2GRAY)
 
         # Compute the HOG descriptor
         hog = cv2.HOGDescriptor()
@@ -496,39 +502,39 @@ class App:
 
         for (x, y, w, h) in rects1:
             hog_result = cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255), 2)
-        cv2.imwrite('imgs/hog.jpg', hog_result)
-        self.show_results('imgs/hog.jpg')
+        cv2.imwrite(os.path.join(f"{self.output_dir}", 'hog.jpg'), hog_result)
+        self.show_results(os.path.join(f"{self.output_dir}", 'hog.jpg'))
 
     def apply_Laplacian(self):
-        if self.open_img == '':
+        if self.input_image_path == '':
             messagebox.showwarning('Warning!', "No Image is selected!")
             return
-        img = cv2.imread(self.open_img, cv2.IMREAD_GRAYSCALE)
+        img = cv2.imread(self.input_image_path, cv2.IMREAD_GRAYSCALE)
 
         laplacian = cv2.Laplacian(img, cv2.CV_64F)
 
-        cv2.imwrite("imgs/Laplacian.jpg", laplacian)
-        self.show_results("imgs/Laplacian.jpg")
+        cv2.imwrite(os.path.join(f"{self.output_dir}", "Laplacian.jpg"), laplacian)
+        self.show_results(os.path.join(f"{self.output_dir}", "Laplacian.jpg"))
         
     def apply_Marr_Hildreth(self):
-        if self.open_img == '':
+        if self.input_image_path == '':
             messagebox.showwarning('Warning!', "No Image is selected!")
             return
-        img = cv2.imread(self.open_img, cv2.IMREAD_GRAYSCALE)
+        img = cv2.imread(self.input_image_path, cv2.IMREAD_GRAYSCALE)
 
         sigma = 1
         laplacian = cv2.Laplacian(img, cv2.CV_64F)
         gaussian = cv2.GaussianBlur(img, (3, 3), sigma)
         marr_hildreth = laplacian - gaussian
 
-        cv2.imwrite("imgs/Marr_Hildreth.jpg", marr_hildreth)
-        self.show_results('imgs/Marr_Hildreth.jpg')
+        cv2.imwrite(os.path.join(f"{self.output_dir}", "Marr_Hildreth.jpg"), marr_hildreth)
+        self.show_results(os.path.join(f"{self.output_dir}", 'Marr_Hildreth.jpg'))
     
     def apply_prewitt(self):
-        if self.open_img == '':
+        if self.input_image_path == '':
             messagebox.showwarning('Warning!', "No Image is selected!")
             return
-        image = cv2.imread(self.open_img)
+        image = cv2.imread(self.input_image_path)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
         # Creating the kernels
@@ -543,15 +549,15 @@ class App:
         prewitt = np.sqrt(np.square(prewitt_x) + np.square(prewitt_y))
         prewitt = (prewitt * 255.0 / prewitt.max()).astype(np.uint8)
 
-        cv2.imwrite("imgs/Prewitt.jpg", prewitt)
+        cv2.imwrite(os.path.join(f"{self.output_dir}", "Prewitt.jpg"), prewitt)
         
-        self.show_results("imgs/Prewitt.jpg")
+        self.show_results(os.path.join(f"{self.output_dir}", "Prewitt.jpg"))
 
     def apply_sobel(self):
-        if self.open_img == '':
+        if self.input_image_path == '':
             messagebox.showwarning('Warning!', "No Image is selected!")
             return
-        image = cv2.imread(self.open_img)
+        image = cv2.imread(self.input_image_path)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
         # Creating the kernels
@@ -566,28 +572,28 @@ class App:
         sobel = np.sqrt(np.square(sobel_x) + np.square(sobel_y))
         sobel = (sobel * 255.0 / sobel.max()).astype(np.uint8)
 
-        cv2.imwrite("imgs/Sobel.jpg", sobel)
-        self.show_results("imgs/Sobel.jpg")
+        cv2.imwrite(os.path.join(f"{self.output_dir}", "Sobel.jpg"), sobel)
+        self.show_results(os.path.join(f"{self.output_dir}", "Sobel.jpg"))
         
     def apply_prewitt_x(self):
-        if self.open_img == '':
+        if self.input_image_path == '':
             messagebox.showwarning('Warning!', "No Image is selected!")
             return
-        image = cv2.imread(self.open_img)
+        image = cv2.imread(self.input_image_path)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         # Creating the kernel
         Prewitt_kernel_x = np.array([[-1, 0, 1], [-1, 0, 1], [-1, 0, 1]])
 
         # Applying the kernels to the grayscale image using convolution
         prewitt_x = cv2.filter2D(gray, -1, Prewitt_kernel_x)
-        cv2.imwrite('imgs/prewitt_x.jpg', prewitt_x)
-        self.show_results('imgs/prewitt_x.jpg')
+        cv2.imwrite(os.path.join(f"{self.output_dir}", 'prewitt_x.jpg'), prewitt_x)
+        self.show_results(os.path.join(f"{self.output_dir}", 'prewitt_x.jpg'))
         
     def apply_prewitt_y(self):
-        if self.open_img == '':
+        if self.input_image_path == '':
             messagebox.showwarning('Warning!', "No Image is selected!")
             return
-        image = cv2.imread(self.open_img)
+        image = cv2.imread(self.input_image_path)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         
         # Creating the kernels
@@ -595,28 +601,28 @@ class App:
         
         # Applying the kernels to the grayscale image using convolution
         prewitt_y = cv2.filter2D(gray, -1, Prewitt_kernel_y)
-        cv2.imwrite('imgs/prewitt_y.jpg', prewitt_y)
-        self.show_results('imgs/prewitt_y.jpg')
+        cv2.imwrite(os.path.join(f"{self.output_dir}", 'prewitt_y.jpg'), prewitt_y)
+        self.show_results(os.path.join(f"{self.output_dir}", 'prewitt_y.jpg'))
         
     def apply_sobel_x(self):
-        if self.open_img == '':
+        if self.input_image_path == '':
             messagebox.showwarning('Warning!', "No Image is selected!")
             return
-        image = cv2.imread(self.open_img)
+        image = cv2.imread(self.input_image_path)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         # Creating the kernels
         Sobel_kernel_x = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]])
 
         # Applying the kernels to the grayscale image using convolution
         sobel_x = cv2.filter2D(gray, -1, Sobel_kernel_x)
-        cv2.imwrite('imgs/sobel_x.jpg', sobel_x)
-        self.show_results('imgs/sobel_x.jpg')
+        cv2.imwrite(os.path.join(f"{self.output_dir}", 'sobel_x.jpg'), sobel_x)
+        self.show_results(os.path.join(f"{self.output_dir}", 'sobel_x.jpg'))
         
     def apply_sobel_y(self):
-        if self.open_img == '':
+        if self.input_image_path == '':
             messagebox.showwarning('Warning!', "No Image is selected!")
             return
-        image = cv2.imread(self.open_img)
+        image = cv2.imread(self.input_image_path)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         
         # Creating the kernels
@@ -624,14 +630,14 @@ class App:
 
         # Applying the kernels to the grayscale image using convolution
         sobel_y = cv2.filter2D(gray, -1, Sobel_kernel_y)
-        cv2.imwrite('imgs/sobel_y.jpg', sobel_y)
-        self.show_results('imgs/sobel_y.jpg')
+        cv2.imwrite(os.path.join(f"{self.output_dir}", 'sobel_y.jpg'), sobel_y)
+        self.show_results(os.path.join(f"{self.output_dir}", 'sobel_y.jpg'))
 
     def apply_kMeans(self):
-        if self.open_img == '':
+        if self.input_image_path == '':
             messagebox.showwarning('Warning!', "No Image is selected!")
             return
-        image = cv2.imread(self.open_img)
+        image = cv2.imread(self.input_image_path)
 
         # Change color to RGB (from BGR)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -658,8 +664,8 @@ class App:
 
         # reshape data into the original image dimensions
         segmented_image = segmented_data.reshape((image.shape))
-        plt.imsave('imgs/k_means.jpg', segmented_image)
-        self.show_results('imgs/k_means.jpg')
+        plt.imsave(os.path.join(f"{self.output_dir}", 'k_means.jpg'), segmented_image)
+        self.show_results(os.path.join(f"{self.output_dir}", 'k_means.jpg'))
         plt.imshow(segmented_image)
         plt.show()
 
