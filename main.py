@@ -20,60 +20,60 @@ class App:
         self.heading = Label(text="Operations", font=("Helvetica", 20, 'bold'), fg="black")
         self.heading.place(x=95, y=10)
         # =========================   Images   ==========================
-        self.add_noiseimg1 = PhotoImage(file='buttons/add_noise1.png')
+        self.add_noiseimg1 = PhotoImage(file='assets/add_noise1.png')
 
-        self.add_noiseimg2 = PhotoImage(file='buttons/add_noise2.png')
+        self.add_noiseimg2 = PhotoImage(file='assets/add_noise2.png')
 
-        self.blurimg1 = PhotoImage(file='buttons/blur1.png')
-        self.blurimg2 = PhotoImage(file='buttons/blur2.png')
+        self.blurimg1 = PhotoImage(file='assets/blur1.png')
+        self.blurimg2 = PhotoImage(file='assets/blur2.png')
 
-        self.cannyimg1 = PhotoImage(file='buttons/canny1.png')
-        self.cannyimg2 = PhotoImage(file='buttons/canny2.png')
+        self.cannyimg1 = PhotoImage(file='assets/canny1.png')
+        self.cannyimg2 = PhotoImage(file='assets/canny2.png')
 
-        self.harrisimg1 = PhotoImage(file='buttons/harris1.png')
-        self.harrisimg2 = PhotoImage(file='buttons/harris2.png')
+        self.harrisimg1 = PhotoImage(file='assets/harris1.png')
+        self.harrisimg2 = PhotoImage(file='assets/harris2.png')
 
-        self.hogimg1 = PhotoImage(file='buttons/hog1.png')
-        self.hogimg2 = PhotoImage(file='buttons/hog2.png')
+        self.hogimg1 = PhotoImage(file='assets/hog1.png')
+        self.hogimg2 = PhotoImage(file='assets/hog2.png')
 
-        self.kmeansimg1 = PhotoImage(file='buttons/kmeans1.png')
-        self.kmeansimg2 = PhotoImage(file='buttons/kmeans2.png')
+        self.kmeansimg1 = PhotoImage(file='assets/kmeans1.png')
+        self.kmeansimg2 = PhotoImage(file='assets/kmeans2.png')
 
-        self.laplacianimg1 = PhotoImage(file='buttons/laplacian1.png')
-        self.laplacianimg2 = PhotoImage(file='buttons/laplacian2.png')
+        self.laplacianimg1 = PhotoImage(file='assets/laplacian1.png')
+        self.laplacianimg2 = PhotoImage(file='assets/laplacian2.png')
 
-        self.marr_hildrethimg1 = PhotoImage(file='buttons/marr_hildreth1.png')
-        self.marr_hildrethimg2 = PhotoImage(file='buttons/marr_hildreth2.png')
+        self.marr_hildrethimg1 = PhotoImage(file='assets/marr_hildreth1.png')
+        self.marr_hildrethimg2 = PhotoImage(file='assets/marr_hildreth2.png')
 
-        self.prewittimg1 = PhotoImage(file='buttons/prewitt1.png')
-        self.prewittimg2 = PhotoImage(file='buttons/prewitt2.png')
+        self.prewittimg1 = PhotoImage(file='assets/prewitt1.png')
+        self.prewittimg2 = PhotoImage(file='assets/prewitt2.png')
 
-        self.prewittximg1 = PhotoImage(file='buttons/prewittx1.png')
-        self.prewittximg2 = PhotoImage(file='buttons/prewittx2.png')
+        self.prewittximg1 = PhotoImage(file='assets/prewittx1.png')
+        self.prewittximg2 = PhotoImage(file='assets/prewittx2.png')
 
-        self.prewittyimg1 = PhotoImage(file='buttons/prewitty1.png')
-        self.prewittyimg2 = PhotoImage(file='buttons/prewitty2.png')
+        self.prewittyimg1 = PhotoImage(file='assets/prewitty1.png')
+        self.prewittyimg2 = PhotoImage(file='assets/prewitty2.png')
 
-        self.remove_blurimg1 = PhotoImage(file='buttons/remove_blur1.png')
-        self.remove_blurimg2 = PhotoImage(file='buttons/remove_blur2.png')
+        self.remove_blurimg1 = PhotoImage(file='assets/remove_blur1.png')
+        self.remove_blurimg2 = PhotoImage(file='assets/remove_blur2.png')
 
-        self.remove_noiseimg1 = PhotoImage(file='buttons/remove_noise1.png')
-        self.remove_noiseimg2 = PhotoImage(file='buttons/remove_noise2.png')
+        self.remove_noiseimg1 = PhotoImage(file='assets/remove_noise1.png')
+        self.remove_noiseimg2 = PhotoImage(file='assets/remove_noise2.png')
 
-        self.siftimg1 = PhotoImage(file='buttons/sift1.png')
-        self.siftimg2 = PhotoImage(file='buttons/sift2.png')
+        self.siftimg1 = PhotoImage(file='assets/sift1.png')
+        self.siftimg2 = PhotoImage(file='assets/sift2.png')
 
-        self.sobelimg1 = PhotoImage(file='buttons/sobel1.png')
-        self.sobelimg2 = PhotoImage(file='buttons/sobel2.png')
+        self.sobelimg1 = PhotoImage(file='assets/sobel1.png')
+        self.sobelimg2 = PhotoImage(file='assets/sobel2.png')
 
-        self.sobelximg1 = PhotoImage(file='buttons/sobelx1.png')
-        self.sobelximg2 = PhotoImage(file='buttons/sobelx2.png')
+        self.sobelximg1 = PhotoImage(file='assets/sobelx1.png')
+        self.sobelximg2 = PhotoImage(file='assets/sobelx2.png')
 
-        self.sobelyimg1 = PhotoImage(file='buttons/sobely1.png')
-        self.sobelyimg2 = PhotoImage(file='buttons/sobely2.png')
+        self.sobelyimg1 = PhotoImage(file='assets/sobely1.png')
+        self.sobelyimg2 = PhotoImage(file='assets/sobely2.png')
 
-        self.browseimg1 = PhotoImage(file='buttons/browse1.png')
-        self.browseimg2 = PhotoImage(file='buttons/browse2.png')
+        self.browseimg1 = PhotoImage(file='assets/browse1.png')
+        self.browseimg2 = PhotoImage(file='assets/browse2.png')
 
         # =========================   Buttons  ==========================
         
@@ -674,4 +674,3 @@ if __name__ == '__main__':
     root = Tk()
     obj = App(root)
     root.mainloop()
-    
