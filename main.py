@@ -13,7 +13,7 @@ class App:
         self.root = root
         self.output_dir = ''  
         self.input_image_path = ''
-        self.root.title('CV Project | Authors: Muhammad Ilyas, Moavia Hassan')
+        self.root.title('Vision Master | Authors: Muhammad Ilyas')
         self.root.geometry('1200x700+80+1')
         self.root.resizable(False, False)
         self.heading = Label(text="Operations", font=("Helvetica", 20, 'bold'), fg="black")
