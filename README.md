@@ -4,12 +4,6 @@
 ## Description
 This project involves various image processing operations implemented using Python and OpenCV. It provides a graphical user interface (GUI) where users can load an image and apply different operations such as adding noise, removing noise, blurring, edge detection, feature extraction, and more.
 
-## Author
-- [Muhammad Ilyas](https://github.com/Muhammad-Ilyas-Ibrahim)
-
-## Contributor
-- [Moavia Hassan](https://github.com/Moavia-Hassan)
-
 ## Prerequisites
 - Python 3.x
 - OpenCV
